@@ -1,11 +1,12 @@
 'use strict';
 
 var express = require("express");
+var contacts =require( '../../public/mock/contacts.json');
 
 var router = express.Router();
 
-router.get("/phoneBook", function(req, res) {
-    res.send("This is the todos!");
+router.get("/contacts", function(req, res) {
+    res.json({contacts: contacts});
 });
 
 

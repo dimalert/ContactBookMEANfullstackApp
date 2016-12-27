@@ -1,5 +1,7 @@
 'use strict';
 
+var angular = require('angular');
+
 angular.module("contactsBook")
 .controller("mainCtrl", function($scope, dataService) {
 
@@ -8,7 +10,7 @@ angular.module("contactsBook")
     $scope.isEdditingMode = false;
 
     dataService.getContacts(function(response){
-        var contacts = response.data;  
+        var contacts = response.data.contacts;  
         $scope.contacts =  contacts;
     });
 
