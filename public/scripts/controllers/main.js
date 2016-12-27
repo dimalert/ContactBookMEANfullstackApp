@@ -44,6 +44,22 @@ angular.module("contactsBook")
         $scope.index -= $scope.contacts.length === $scope.index ? 1 : 0;
     };
 
+    $scope.find = function() {
+        if($scope.contacts.length < 1) {
+            alert("There is no contacts in Contacts Book!");
+            return;
+        }
+
+        var str = prompt("Enter name to find contact in Contacts Book", "");
+        for(let i = 0; i < $scope.contacts.length; i++) {
+            if ($scope.contacts[i].name === str) {
+                $scope.index = i;
+                return;
+            }
+        }
+        alert("Contact with this name was not found.");
+    };
+
     $scope.cancel = function() {
         if($scope.isAddingMode === true) {
             $scope.contacts.pop();
