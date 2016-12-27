@@ -41,6 +41,7 @@ webpackJsonp([0],[
 	        $scope.isAddingMode = true;
 	        $scope.contacts.push({"name": "", "address": ""});
 	        $scope.index = $scope.contacts.length - 1;
+	        $scope.contacts[$scope.index].edited = true;
 	    };
 
 	    $scope.edit = function() {
@@ -50,6 +51,7 @@ webpackJsonp([0],[
 	        }
 	        
 	        $scope.isEdditingMode = true;
+	        $scope.contacts[$scope.index].edited = true;
 	        changedContact.name = $scope.contacts[$scope.index].name;
 	        changedContact.address = $scope.contacts[$scope.index].address;
 	    };
@@ -91,11 +93,25 @@ webpackJsonp([0],[
 	        $scope.contacts[$scope.index].name = changedContact.name;
 	        $scope.contacts[$scope.index].address = changedContact.address;
 	        $scope.isEdditingMode = false;
+	        $scope.contacts[$scope.index].edited = false;
 	    };
 
 	    $scope.save = function() {
 	        $scope.isAddingMode = false;
 	        $scope.isEdditingMode = false;
+	        var filteredContacts = $scope.contacts.filter( (contact) => {
+	            if(contact.edited) {
+	                return contact;
+	            }
+	        });
+	        dataService.saveContacts(filteredContacts)
+	        .finally($scope.resetContactState());
+	    };
+
+	    $scope.resetContactState = function() {
+	        $scope.contacts.forEach(function(contact){
+	            contact.edited = false;
+	        });
 	    };
 
 	});
@@ -109,10 +125,29 @@ webpackJsonp([0],[
 	var angular = __webpack_require__(1);
 
 	angular.module("contactsBook")
-	.service("dataService", function($http) {
+	.service("dataService", function($http, $q) {
 	    this.getContacts = function(cb) {
-	    $http.get('/api/contacts').then(cb);
-	  };
+	      $http.get('/api/contacts').then(cb);
+	    };
+	    
+	    this.saveContacts = function(contacts) {
+	      var queue = [];
+	      contacts.forEach(function(contact) {
+	        var request;
+	        if(!contact._id) {
+	          request = $http.post('/api/contacts', contact);
+	        } else {
+	          request = $http.put('/api/contacts/' + contact._id, contact).then(function(result) {
+	            contact = result.data.contact;
+	            return contact;
+	          });
+	        };
+	        queue.push(request);
+	      });
+	      return $q.all(queue).then(function(results) {
+	        console.log(`I saved ${contacts.length} contacts!`);
+	      });
+	    };
 	});
 
 /***/ }

@@ -23,6 +23,7 @@ angular.module("contactsBook")
         $scope.isAddingMode = true;
         $scope.contacts.push({"name": "", "address": ""});
         $scope.index = $scope.contacts.length - 1;
+        $scope.contacts[$scope.index].edited = true;
     };
 
     $scope.edit = function() {
@@ -32,6 +33,7 @@ angular.module("contactsBook")
         }
         
         $scope.isEdditingMode = true;
+        $scope.contacts[$scope.index].edited = true;
         changedContact.name = $scope.contacts[$scope.index].name;
         changedContact.address = $scope.contacts[$scope.index].address;
     };
@@ -73,11 +75,25 @@ angular.module("contactsBook")
         $scope.contacts[$scope.index].name = changedContact.name;
         $scope.contacts[$scope.index].address = changedContact.address;
         $scope.isEdditingMode = false;
+        $scope.contacts[$scope.index].edited = false;
     };
 
     $scope.save = function() {
         $scope.isAddingMode = false;
         $scope.isEdditingMode = false;
+        var filteredContacts = $scope.contacts.filter( (contact) => {
+            if(contact.edited) {
+                return contact;
+            }
+        });
+        dataService.saveContacts(filteredContacts)
+        .finally($scope.resetContactState());
+    };
+
+    $scope.resetContactState = function() {
+        $scope.contacts.forEach(function(contact){
+            contact.edited = false;
+        });
     };
 
 });
