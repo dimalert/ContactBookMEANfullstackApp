@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" ng-app="contactsBook">
+<head>
+  <title></title>
+  <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/styles/main.css" type="text/css">
+</head>
+<body>
+  
+  <h1>My Contacts Book!</h1>
+  
+  <div class="wrapper" ng-controller="mainCtrl">
+
+    <div class="wrap_button">
+      <a href="" class="btn green add" ng-click="addContact();">Add</a>
+      <a href="" class="btn green save" ng-show="isAddingMode || isEdditingMode" ng-click="save();">Save</a>
+      <a href="" class="btn green cancel" ng-show="isAddingMode || isEdditingMode" ng-click="cancel();">Cancel</a>
+      <a href="" class="btn green edit" ng-click="edit();">Edit</a>
+      <a href="" class="btn green delete" ng-click="del();">Delete</a>
+      <a href="" class="btn green find">Find</a>
+    </div>
+
+    <div class="form">
+      <label>Name</label>
+      <input type="text" ng-model="contacts[index].name">
+      <label>Adress</label>
+      <textarea rows="5" ng-model="contacts[index].address"></textarea>
+    </div>
+
+    <div class="wrap_button">
+      <a href="" class="btn green" ng-show="index !== 0 && contacts.length > 1 && !isAddingMode && !isEdditingMode" ng-click="dcrsIndex();">Prev</a>
+      <a href="" class="btn green" ng-show="index !== contacts.length - 1 && !isAddingMode && !isEdditingMode && contacts.length > 1 " ng-click="incrsIndex();">Next</a>
+    </div>
+  </div>
+  <script src="/vendor/angular.js"></script>
+  <script src="/scripts/app.js"></script>
+  <script src="/scripts/controllers/main.js"></script>
+  <script src="/scripts/services/data.js"></script>
+</body>
+</html>

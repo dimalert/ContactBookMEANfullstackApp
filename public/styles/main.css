@@ -1,0 +1,76 @@
+body {
+  color: #2d3339;
+  font-family: "Varela Round";
+  background: #edeff0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 16px; 
+}
+
+.btn {
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 16px;
+  text-decoration: none;
+  margin: 20px;
+  color: #fff;
+  position: relative;
+  display: inline-block;
+}
+
+.btn:active {
+  transform: translate(0px, 5px);
+  -webkit-transform: translate(0px, 5px);
+  box-shadow: 0px 1px 0px 0px;
+}
+
+.green {
+  background-color: #55acee;
+  box-shadow: 0px 5px 0px 0px #3C93D5;
+}
+
+.green:hover {
+  background-color: #6FC6FF;
+}
+
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: 960px;
+}
+.wrap_button{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+.form{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: stretch;
+}
+
+label{
+  align-self: flex-start;
+  padding-left: 5px;
+}
+input[type="text"], textarea {
+  padding: 10px;
+  border: solid 1px #fff;
+  box-shadow: inset 1px 1px 2px 0 #707070;
+  transition: box-shadow 0.3s;
+  width: 320px;
+  margin-bottom: 25px;
+}
+input[type="text"]:focus,
+input[type="text"].focus, textarea:focus {
+  box-shadow: inset 1px 1px 2px 0 #c9c9c9;
+}
