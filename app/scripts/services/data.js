@@ -26,4 +26,13 @@ angular.module("contactsBook")
         console.log(`I saved ${contacts.length} contacts!`);
       });
     };
+
+    this.deleteTodo = function(contact) {
+        if (!contact._id) {
+          return $q.resolve();
+        }
+        return $http.delete('/api/contacts/' + contact._id).then(function() {
+          console.log(`I deleted the ${contact.name} contact!`);
+        });
+    };
 });

@@ -43,9 +43,11 @@ angular.module("contactsBook")
             alert("There is no contacts in Contacts Book!");
             return;
         }
-
-        $scope.contacts.splice($scope.index, 1);
-        $scope.index -= $scope.contacts.length === $scope.index ? 1 : 0;
+        dataService.deleteTodo($scope.contacts[$scope.index]).then(function() {
+            $scope.contacts.splice($scope.index, 1);
+            $scope.index -= $scope.contacts.length === $scope.index ? 1 : 0;
+        });
+        
     };
 
     $scope.find = function() {

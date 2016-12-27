@@ -61,9 +61,11 @@ webpackJsonp([0],[
 	            alert("There is no contacts in Contacts Book!");
 	            return;
 	        }
-
-	        $scope.contacts.splice($scope.index, 1);
-	        $scope.index -= $scope.contacts.length === $scope.index ? 1 : 0;
+	        dataService.deleteTodo($scope.contacts[$scope.index]).then(function() {
+	            $scope.contacts.splice($scope.index, 1);
+	            $scope.index -= $scope.contacts.length === $scope.index ? 1 : 0;
+	        });
+	        
 	    };
 
 	    $scope.find = function() {
@@ -147,6 +149,15 @@ webpackJsonp([0],[
 	      return $q.all(queue).then(function(results) {
 	        console.log(`I saved ${contacts.length} contacts!`);
 	      });
+	    };
+
+	    this.deleteTodo = function(contact) {
+	        if (!contact._id) {
+	          return $q.resolve();
+	        }
+	        return $http.delete('/api/contacts/' + contact._id).then(function() {
+	          console.log(`I deleted the ${contact.name} contact!`);
+	        });
 	    };
 	});
 

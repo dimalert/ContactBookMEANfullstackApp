@@ -39,5 +39,14 @@ router.put('/contacts/:id', function(req, res) {
     });
 });
 
+router.delete('/contacts/:id', function(req, res) {
+  var id = req.params.id;
+  ContactsBook.findByIdAndRemove(id, function(err, result) {
+    if (err) {
+      return res.status(500).json({ err: err.message });
+    }
+    res.json({ message: 'Contact  Deleted' });
+  });
+});
 
 module.exports = router;
