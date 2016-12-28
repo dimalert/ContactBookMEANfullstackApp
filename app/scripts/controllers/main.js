@@ -12,7 +12,15 @@ angular.module("contactsBook")
     dataService.getContacts(function(response){
         var contacts = response.data.contacts;  
         $scope.contacts =  contacts;
+        sort();
     });
+
+    function sort() {
+        $scope.contacts.sort((a, b) => {
+            return a.name > b.name;
+        });
+        $scope.setContactState();
+    }
 
     $scope.index = 0;
 
@@ -83,6 +91,7 @@ angular.module("contactsBook")
     $scope.save = function() {
         $scope.isAddingMode = false;
         $scope.isEdditingMode = false;
+        sort();
         var filteredContacts = $scope.contacts.filter( (contact) => {
             if(contact.edited) {
                 return contact;
@@ -95,6 +104,12 @@ angular.module("contactsBook")
     $scope.resetContactState = function() {
         $scope.contacts.forEach(function(contact){
             contact.edited = false;
+        });
+    };
+
+    $scope.setContactState = function() {
+        $scope.contacts.forEach(function(contact){
+            contact.edited = true;
         });
     };
 

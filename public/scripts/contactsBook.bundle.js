@@ -30,7 +30,15 @@ webpackJsonp([0],[
 	    dataService.getContacts(function(response){
 	        var contacts = response.data.contacts;  
 	        $scope.contacts =  contacts;
+	        sort();
 	    });
+
+	    function sort() {
+	        $scope.contacts.sort((a, b) => {
+	            return a.name > b.name;
+	        });
+	        $scope.setContactState();
+	    }
 
 	    $scope.index = 0;
 
@@ -101,6 +109,7 @@ webpackJsonp([0],[
 	    $scope.save = function() {
 	        $scope.isAddingMode = false;
 	        $scope.isEdditingMode = false;
+	        sort();
 	        var filteredContacts = $scope.contacts.filter( (contact) => {
 	            if(contact.edited) {
 	                return contact;
@@ -113,6 +122,12 @@ webpackJsonp([0],[
 	    $scope.resetContactState = function() {
 	        $scope.contacts.forEach(function(contact){
 	            contact.edited = false;
+	        });
+	    };
+
+	    $scope.setContactState = function() {
+	        $scope.contacts.forEach(function(contact){
+	            contact.edited = true;
 	        });
 	    };
 
